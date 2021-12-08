@@ -4,12 +4,17 @@ module.exports = function upload(file) {
   return new Promise(function (resolve, reject) {
     /////ASYC Stahgg
     cloudinary.v2.config({
-      cloud_name: "soultana-mahdi",
-      api_key: "854179451261813",
-      api_secret: "_WVO8zT9yB_gQEFiSAjPXn-ncE4",
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.CLOUD_API_KEY,
+      api_secret: process.env.CLOUD_API_SECRET,
       secure: true,
     });
-
+    console.log({
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.CLOUD_API_KEY,
+      api_secret: process.env.CLOUD_API_SECRET,
+      secure: true,
+    });
     cloudinary.v2.uploader.upload(
       file,
       {

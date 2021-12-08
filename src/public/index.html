@@ -16,7 +16,7 @@ https://www.upwork.com/freelancers/~01c3b60e1c04398fd9
 skype Id: live:.cid.4c11f2bc899ffbc0
 Thank you very much for your interest and I hope to start solving your problem right now 😊"
     />
-    <title>File Upload</title>
+    <title>File Uploader</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -24,15 +24,15 @@ Thank you very much for your interest and I hope to start solving your problem r
     <form>
       <label for="email">
         <span>email</span>
-        <input type="email" id="email" />
+        <input required type="email" id="email" />
       </label>
       <label for="name">
         <span>Name</span>
-        <input type="text" id="name" />
+        <input required type="text" id="name" />
       </label>
       <label for="file">
         <span>File</span>
-        <input type="file" id="file" />
+        <input required type="file" id="file" />
       </label>
       <label class="sub">
         <button type="submit" disabled>Upload</button>
@@ -44,9 +44,13 @@ Thank you very much for your interest and I hope to start solving your problem r
       ></audio>
     </form>
     <div class="result">
-      <h1>Thankyou for your Thrust</h1>
-      <span> your publick Url for this is :</span>
+      <h1>Thank you for your Thrust</h1>
+      <span> your file public Url is :</span>
       <a href="#" target="_blank" id="url">Url.com</a>
+      <span class="close">X</span>
+    </div>
+    <div class="result error block">
+      <h3></h3>
       <span class="close">X</span>
     </div>
     <script src="./script.js"></script>

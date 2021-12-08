@@ -4,14 +4,31 @@ const img = document.querySelector("img");
 const button = document.querySelector("button");
 const notification = document.querySelector(".result");
 const url = document.querySelector("#url");
-const close = document.querySelector(".close");
+const closeBtns = document.querySelectorAll(".close");
+const errorDiv = document.querySelector(".error");
 const audio = document.querySelector("audio");
 const inputs = [...document.querySelectorAll("input")];
+let error;
 inputs.forEach((input) => {
-  input.addEventListener("input", () => disableBtn(inputs));
+  input.addEventListener("input", (e) => {
+    disableBtn(inputs);
+    if (e.target.id === "email") {
+      let h3 = errorDiv.querySelector("h3");
+      if (!e.target.value.includes("@gmail.co")) {
+        console.log("email");
+        errorDiv.classList.add("block");
+        h3.textContent = "your email must end with : @gmail.com";
+        error = true;
+      } else {
+        error = false;
+        h3.textContent = "";
+        errorDiv.classList.remove("block");
+      }
+    }
+  });
 });
 function disableBtn(inputs) {
-  const isDisabled = inputs.every((input) => !!input.value.trim());
+  const isDisabled = inputs.every((input) => !!input.value.trim() && !error);
   button.disabled = !isDisabled;
 }
 
@@ -26,18 +43,25 @@ file.addEventListener("input", (e) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const types = ["data:image/", "data:audio/"];
-
+      const types = ["data:image/", "data:audio/", "data:video/"];
+      console.log(reader.result);
       if (reader.result.includes(types[0])) {
         img.src = reader.result;
         value = reader.result;
-      }
-      if (reader.result.includes(types[1])) {
+      } else if (reader.result.includes(types[1])) {
         img.src =
           "https://image.shutterstock.com/image-vector/audio-file-line-icon-outline-260nw-472254040.jpg";
         audio.src = reader.result;
         value = reader.result;
         audio.classList.add("block");
+      } else if (reader.result.includes(types[2])) {
+        img.src =
+          "https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-video-icon-image_1128393.jpg";
+        value = reader.result;
+      } else {
+        img.src =
+          "https://previews.123rf.com/images/timhester/timhester1910/timhester191000082/135721172-document-or-file-icon-in-simple-vector.jpg";
+        value = reader.result;
       }
     };
   }
@@ -62,7 +86,7 @@ form.addEventListener("submit", async (e) => {
         }),
       }).then((res) => res.json());
       notification.classList.add("block");
-      url.textContent = data.secure_url || "notttttt workkng";
+      url.textContent = data.secure_url || "try again !";
       url.href = data.secure_url;
 
       button.disabled = false;
@@ -78,6 +102,9 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-close.addEventListener("click", () => {
-  notification.classList.remove("block");
+[...closeBtns].forEach((close) => {
+  close.addEventListener("click", () => {
+    notification.classList.remove("block");
+    errorDiv.classList.remove("block");
+  });
 });
