@@ -2,7 +2,7 @@ const express = require("express");
 const userRoute = require("./routes/userRoute");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
@@ -16,4 +16,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(PORT, () => console.log("everything is good Server Run !!! ));
+app.listen(port, () => {
+  console.log("Server Is Running in Port :" + port);
+});
